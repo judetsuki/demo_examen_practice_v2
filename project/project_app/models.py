@@ -37,7 +37,9 @@ class OrderDetail(models.Model):
     
 
 class Supplier(models.Model):
-    name = models.CharField(max_length=40) #не добавлял def __str__(self): и verbose чтобы посмотреть как будет отличаться
+    name = models.CharField(max_length=40)
+    def __str__(self):
+        return self.name
 
 class Category(models.Model):
     name = models.CharField(max_length=40,verbose_name='Категория')
