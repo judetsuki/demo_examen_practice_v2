@@ -19,21 +19,25 @@ class Product(models.Model):
 
 class Order(models.Model):
     STATUS_CHOICES = [
-        ('completed', 'завершен'),
-        ('new', 'новый')
+        ('Завершен', 'Завершен'),
+        ('Новый', 'Новый')
     ]
-    orderDate = models.DateField(verbose_name='Дата заказа')
-    deliveryDate = models.DateField(verbose_name='Дата доставки')
+    order_date = models.DateField(verbose_name='Дата заказа')
+    delivery_date = models.DateField(verbose_name='Дата доставки')
     status = models.CharField(choices=STATUS_CHOICES, max_length=30, verbose_name='Статус заказа')
-    deliveryAddress = models.ForeignKey('DeliveryPoint', on_delete=models.CASCADE,verbose_name='Адрес пункта выдачи')
-    receiver_name = models.TextField(verbose_name='Имя получателя')
-    deliveryCode = models.TextField('Код для получения')
+    delivery_address = models.ForeignKey('DeliveryPoint', on_delete=models.CASCADE,verbose_name='Адрес пункта выдачи')
+    receiver_name = models.CharField(max_length=50,verbose_name='Имя получателя')
+    delivery_code = models.CharField(max_length=30,verbose_name='Код для получения')
     user = models.ForeignKey(User, on_delete=models.PROTECT,related_name='orders',null=True, blank=True,verbose_name='Клиент',)
+    def __str__(self):
+        return str(self.pk)
 
 class OrderDetail(models.Model):
     order = models.ForeignKey('Order', on_delete=models.CASCADE,related_name='items',verbose_name='Заказ')
     product = models.ForeignKey('Product', on_delete=models.PROTECT,verbose_name='Товар')
     order_quantity = models.PositiveIntegerField(default=1,verbose_name='Кол-во')
+    def __str__(self):
+        return str(self.order)
     
 
 class Supplier(models.Model):
