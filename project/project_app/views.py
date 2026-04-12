@@ -14,16 +14,33 @@ def delete_product(request,pk):
     return redirect('product_list')
 
 def edit_product(request,pk):
-    if request.user.is_superuser:
-        product = get_object_or_404(Product,pk=pk)
-        if request.method == 'POST':
-            form = ProductForm(request.POST, instance=product)
-            if form.is_valid():
-                form.save()
-                return redirect('product_list')
+    if not request.user.is_superuser:
+        return redirect('product_list')
+    
+    product = get_object_or_404(Product,pk=pk)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
     else:
         form = ProductForm(instance=product)
-    return render (request, 'store/edit_form.html', {'form':form, 'title':'редактирование товара'})
+    return render (request, 'store/form_generic.html', {'form':form, 'title':'редактирование продукта'})
+
+def edit_order(request,pk):
+    if not request.user.is_superuser:
+        return redirect('product_list')
+    
+    order = get_object_or_404(Order,pk=pk)
+    if request.method == 'POST':
+        form = OrderForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = OrderForm(instance=order)
+    return render (request, 'store/form_generic.html', {'form':form, 'title':'редактирование заказов'})
+
 
 def product_list(request):
     user = request.user
@@ -35,10 +52,6 @@ def product_list(request):
         if search_query:
             products=products.filter(name__icontains=search_query)
         orders = Order.objects.all()
-        #менеджер только видит заказы
-    # if user.is_superuser:
-        
-     #логика удаления заказов
 
     return render (request, 'store/product_list.html',{
         'products': products,

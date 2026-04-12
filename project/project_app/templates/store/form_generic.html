@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    {% block content %}
+    <div class="form-container">
+      <h2>{{title|default:"Заполнение формы"}}</h2>
+      <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="form-fields">{{ form.as_p}}</div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            {{ button_text|default:"Сохранить"}}
+          </button>
+        </div>
+        <a href="javascript:history.back()" class="btn btn-secondary">Отмена</a>
+      </form>
+    </div>
+    {% endblock%}
+  </body>
+</html>

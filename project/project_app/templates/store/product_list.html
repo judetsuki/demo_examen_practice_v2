@@ -6,7 +6,13 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>список товаров. вы вошли как {{ role }}</h1>
+    <h1>список товаров. вы вошли как 
+      {% if user.is_superuser %} Администратор
+      {% elif user.is_staff %} Менеджер
+      {% elif user.is_authenticated %} Клиент
+      {% else %} гость
+      {% endif %}
+    </h1>
 
     <table>
       {% for p in products %}
@@ -14,8 +20,11 @@
         <td>{{ p.name }}</td>
         <td>{{ p.price }} руб. </td>
 
-        {% if role == 'admin' %}
-        <td><button>Редактировать</button></td>
+        {% if user.is_superuser %}
+        <td>
+        <a href="{% url 'edit_product' p.pk %}"><button>Редактировать</button></a>
+        <a href="{% url 'delete_product' p.pk %}"><button>Удалить</button></a>
+        </td>
         {% endif %}
       </tr>
       {% endfor %}
@@ -34,6 +43,12 @@
         <td>{{ o.pk }}</td>
         <td>{{ o.receiver_name }}</td>
         <td>{{ o.status }}</td>
+        {% if user.is_superuser %}
+        <td>
+          <a href="{% url 'edit_order' o.pk %}"><button>Редактировать</button></a>
+          <a href="{% url 'delete_order' o.pk %}" onclick="return confirm('Удалить заказ?')"><button>Удалить</button></a>
+        </td> 
+        {% endif %}
       </tr>
       {% endfor %}
     </table>
