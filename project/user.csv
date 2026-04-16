@@ -1,11 +1,11 @@
-Роль сотрудника,ФИО,Логин,Пароль
-Администратор,Никифорова Весения Николаевна,94d5ous@gmail.com,uzWC67
-Администратор,Сазонов Руслан Германович,uth4iz@mail.com,2L6KZG
-Администратор,Одинцов Серафим Артёмович,yzls62@outlook.com,JlFRCZ
-Менеджер,Степанов Михаил Артёмович,1diph5e@tutanota.com,8ntwUp
-Менеджер,Ворсин Петр Евгеньевич,tjde7c@yahoo.com,YOyhfR
-Менеджер,Старикова Елена Павловна,wpmrc3do@tutanota.com,RSbvHv
-Авторизированный клиент,Михайлюк Анна Вячеславовна,5d4zbu@tutanota.com,rwVDh9
-Авторизированный клиент,Ситдикова Елена Анатольевна,ptec8ym@yahoo.com,LdNyos
-Авторизированный клиент,Ворсин Петр Евгеньевич,1qz4kw@mail.com,gynQMT
-Авторизированный клиент,Старикова Елена Павловна,4np6se@mail.com,AtnDjr
+is_active,is_staff,is_superuser,first_name,last_name,username,password,email,date_joined
+,,TRUE,Весения,Никифорова Николаевна,94d5ous,uzWC67,94d5ous@gmail.com,1/1/2025
+,,TRUE, Руслан ,Сазонов Германович,uth4iz,2L6KZG,uth4iz@mail.com,1/1/2025
+,,TRUE,Серафим,Одинцов Артёмович,yzls62,JlFRCZ,yzls62@outlook.com,1/1/2025
+,TRUE,,Михаил,Степанов Артёмович,1diph5e,8ntwUp,1diph5e@tutanota.com,1/1/2025
+,TRUE,,Петр,Ворсин Евгеньевич,tjde7c,YOyhfR,tjde7c@yahoo.com,,Ворсин,1/1/2025
+,TRUE,,Елена,Старикова Павловна,wpmrc3do,RSbvHv,wpmrc3do@tutanota.com,1/1/2025
+TRUE,,,Анна,Михайлюк Вячеславовна,5d4zbu,rwVDh9,5d4zbu@tutanota.com,1/1/2025
+TRUE,,,Елена,Ситдикова Анатольевна,ptec8ym,LdNyos,ptec8ym@yahoo.com,1/1/2025
+TRUE,,,Петр,Ворсин Евгеньевич,1qz4kw,gynQMT,1qz4kw@mail.com,1/1/2025
+TRUE,,,Елена,Старикова Павловна,4np6se,AtnDjr,4np6se@mail.com,1/1/2025

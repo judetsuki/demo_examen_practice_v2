@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style> 
+       body { font-family: 'Times New Roman', serif; background: #FFFFFF; margin: 20px;}
+       button, input[type=submit]
+       a[style*=background-color] {background-color:  #00FA9A; color:black; border: none; border-radius: 4px; padding: 5px;}
+       table {width: 100%; border-collapse: collapse;}
+       th,td {background: #7FFF00;}
+       .product-row {background: #7FFF00;}
+       .high-discount {background: #00FA9A;}
+       .out-of-stock {background: lightblue;}
+       .price-discount s {color: red;}
+       .price-discount .final-price {color: black;}
+       .product-image {max-width: 100px;}
+       .controls {margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+    {% include "includes/header.html" %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {% include "includes/footer.html" %}
+</body>
+
+
+</html>
