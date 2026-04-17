@@ -1,59 +1,47 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>список товаров. вы вошли как 
-      {% if user.is_superuser %} Администратор
-      {% elif user.is_staff %} Менеджер
-      {% elif user.is_authenticated %} Клиент
-      {% else %} гость
-      {% endif %}
-    </h1>
+{% extends "base.html" %}
+{% load static %}
 
-    <table>
-      {% for p in products %}
-      <tr>
-        <td>{{ p.name }}</td>
-        <td>{{ p.price }} руб. </td>
+{% block title %}
+страница товаров
+{% endblock %}
 
-        {% if user.is_superuser %}
-        <td>
-        <a href="{% url 'edit_product' p.pk %}"><button>Редактировать</button></a>
-        <a href="{% url 'delete_product' p.pk %}"><button>Удалить</button></a>
-        </td>
-        {% endif %}
-      </tr>
-      {% endfor %}
-    </table>
-
- {% if orders %}
-    <h2>Раздел заказов</h2>
-    <table border="1">
-      <tr>
-        <th>ID</th>
-        <th>Клиент</th>
-        <th>Статус</th>
-      </tr>
-      {% for o in orders %}
-      <tr>
-        <td>{{ o.pk }}</td>
-        <td>{{ o.receiver_name }}</td>
-        <td>{{ o.status }}</td>
-        {% if user.is_superuser %}
-        <td>
-          <a href="{% url 'edit_order' o.pk %}"><button>Редактировать</button></a>
-          <a href="{% url 'delete_order' o.pk %}" onclick="return confirm('Удалить заказ?')"><button>Удалить</button></a>
-        </td> 
-        {% endif %}
-      </tr>
-      {% endfor %}
-    </table>
+{% block content %}
+<div style="display: flex; justify-content: center;">
+    {% if user.is authenticated and (user.is_staff or user.is_superuser) %}
+    <div class="controls"> 
+        <input type="text" id="search" placeholder="Поиск" value="{{ search_query }}">
+    </div>
     {% endif %}
+</div>
+<div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+    {% for product in products %}
+    <div class="product_card" style="width: 100%; max-width: 1000px; border: 1px solid #000 ;">
+        <div style="display: flex;">
+            <div style="flex: 1;">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'picture.png '%}{% endif %}" alt="" srcset="">
+            </div>
 
+            <div style="flex: 2; ">
+                <p>{{product.get_category_display}}</p>
+                <p>{{product.description|truncatechars:100}}</p>
+                <p>{{product.maunfacturer}}</p>
+                <p>{{product.supplier}}</p>
+                <p>{% if product.discount %}
+                    <span class="price-discount"><s>{{product.price}}</s>
+                        <span class = 'final-price'>{{product.get_final_price|default:product.price}}</span></span>
+                        {% else %}{{product.price}}{% endif %}
+                </p>
+                <p>{{ product.unit }}</p>
+                <p>{{ product.stock }}</p>
+            </div>
 
-  </body>
-</html>
+            <div style="flex: 0 0 100px; text-align: center;">
+                <p>Скидка</p>
+                <p>{{product.discount}}</p>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

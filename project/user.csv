@@ -1,11 +1,11 @@
-is_active,is_staff,is_superuser,first_name,last_name,username,password,email,date_joined
-,,TRUE,Весения,Никифорова Николаевна,94d5ous,uzWC67,94d5ous@gmail.com,1/1/2025
-,,TRUE, Руслан ,Сазонов Германович,uth4iz,2L6KZG,uth4iz@mail.com,1/1/2025
-,,TRUE,Серафим,Одинцов Артёмович,yzls62,JlFRCZ,yzls62@outlook.com,1/1/2025
-,TRUE,,Михаил,Степанов Артёмович,1diph5e,8ntwUp,1diph5e@tutanota.com,1/1/2025
-,TRUE,,Петр,Ворсин Евгеньевич,tjde7c,YOyhfR,tjde7c@yahoo.com,,Ворсин,1/1/2025
-,TRUE,,Елена,Старикова Павловна,wpmrc3do,RSbvHv,wpmrc3do@tutanota.com,1/1/2025
-TRUE,,,Анна,Михайлюк Вячеславовна,5d4zbu,rwVDh9,5d4zbu@tutanota.com,1/1/2025
-TRUE,,,Елена,Ситдикова Анатольевна,ptec8ym,LdNyos,ptec8ym@yahoo.com,1/1/2025
-TRUE,,,Петр,Ворсин Евгеньевич,1qz4kw,gynQMT,1qz4kw@mail.com,1/1/2025
-TRUE,,,Елена,Старикова Павловна,4np6se,AtnDjr,4np6se@mail.com,1/1/2025
+is_active,is_staff,is_superuser,first_name,last_name,username,password,email,date_joined,user_id
+1,1,1,Весения,Никифорова Николаевна,94d5ous,uzWC67,94d5ous@gmail.com,1/1/2025
+1,1,1, Руслан ,Сазонов Германович,uth4iz,2L6KZG,uth4iz@mail.com,1/1/2025
+1,1,1,Серафим,Одинцов Артёмович,yzls62,JlFRCZ,yzls62@outlook.com,1/1/2025
+1,1,,Михаил,Степанов Артёмович,1diph5e,8ntwUp,1diph5e@tutanota.com,1/1/2025
+1,1,,Петр,Ворсин Евгеньевич,tjde7c,YOyhfR,tjde7c@yahoo.com,,Ворсин,1/1/2025
+1,1,,Елена,Старикова Павловна,wpmrc3do,RSbvHv,wpmrc3do@tutanota.com,1/1/2025
+1,,,Анна,Михайлюк Вячеславовна,5d4zbu,rwVDh9,5d4zbu@tutanota.com,1/1/2025
+1,,,Елена,Ситдикова Анатольевна,ptec8ym,LdNyos,ptec8ym@yahoo.com,1/1/2025
+1,,,Петр,Ворсин Евгеньевич,1qz4kw,gynQMT,1qz4kw@mail.com,1/1/2025
+1,,,Елена,Старикова Павловна,4np6se,AtnDjr,4np6se@mail.com,1/1/2025

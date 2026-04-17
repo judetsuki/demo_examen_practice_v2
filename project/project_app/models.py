@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from decimal import Decimal
 
 # Create your models here.
 
@@ -16,7 +17,14 @@ class Product(models.Model):
     discount = models.PositiveIntegerField(default=0,verbose_name='Скидка')
     stock = models.PositiveBigIntegerField(default=0,verbose_name='Количество на складе')
     description = models.TextField(verbose_name='Описание')
-    image = models.ImageField(upload_to='images/',max_length=255,blank=True, null=True,verbose_name='Изображение')
+    image = models.ImageField(upload_to='products/',max_length=255,blank=True, null=True,verbose_name='Изображение')
+
+    def get_final_price(self):
+        if self.discount:
+            return self.price * (1 - (Decimal(self.discount) / 100))
+        return self.price
+    
+
     def __str__(self):
         return f"{self.sku} | {self.name}"
 

@@ -1,4 +1,4 @@
-{% extends base.html %}
+{% extends "base.html" %}
 
 {% block title %}
 страница входа
@@ -6,10 +6,12 @@
 
 {% block content %}
 <form method="post">
-    {% csrf token %}
+    {% csrf_token %}
     <label for="username">логин</label>
     <input type="text" name="username" id="username">
     <button type="submit">войти</button>
+    <label for="password"></label>
+    <input type="password" name="password" id="password">
 </form>
 
 {% if form.errors %}

@@ -47,7 +47,7 @@ def product_list(request):
     products = Product.objects.all()
     orders = []
 
-    if user.is_staff:
+    if user.is_authenticated and user.is_staff or user.is_superuser:
         search_query=request.GET.get('search')
         if search_query:
             products=products.filter(name__icontains=search_query)
