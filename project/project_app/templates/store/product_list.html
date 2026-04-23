@@ -21,7 +21,7 @@
     <div class="product_card" style="width: 100%; max-width: 1000px; border: 1px solid #000 ;">
         <div style="display: flex;">
             <div style="flex: 1;">
-                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'picture.png '%}{% endif %}" alt="" srcset="">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'picture.png '%}{% endif %}" style="max-width:100%"  alt="картинка обуви" srcset="">
             </div>
 
             <div style="flex: 2; ">
