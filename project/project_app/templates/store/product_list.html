@@ -7,7 +7,7 @@
 
 {% block content %}
 <div style="display: flex; justify-content: center;">
-    {% if user.is_staff or user.is_superuser %}
+{% if user.is_authenticated and user.is_staff or user.is_superuser %}
 <div class="controls"> 
     <form method="get" action="">
         <input type="text" name="search" id="search" placeholder="Поиск" value="{{ request.GET.search }}">
@@ -19,6 +19,10 @@
 <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
     {% for product in products %}
     <div class="product_card" style="width: 100%; max-width: 1000px; border: 1px solid #000 ;">
+            {% if user.is_superuser %}
+            <a href="{% url 'project_app:edit_product' product.pk %}">Редактировать</a>
+            <a href="{% url 'project_app:delete_product' product.pk %}">Удалить</a>
+        {% endif %}
         <div style="display: flex;">
             <div style="flex: 1;">
                 <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'picture.png '%}{% endif %}" style="max-width:100%"  alt="картинка обуви" srcset="">

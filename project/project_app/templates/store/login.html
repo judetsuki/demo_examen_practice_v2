@@ -7,18 +7,22 @@
 {% block content %}
 <form method="post">
     {% csrf_token %}
-    <label for="username">логин</label>
+    <label for="username">Логин</label>
     <input type="text" name="username" id="username">
-    <button type="submit">войти</button>
-    <label for="password"></label>
+    
+    <label for="password">Пароль</label>
     <input type="password" name="password" id="password">
+    
+    <button type="submit">Войти</button>
 </form>
+
 
 {% if form.errors %}
 <p>неверный логин или пароль</p>
 {% endif %}
 <div>
-    <a>войти без авторизаций</a>
+    <a href="{% url 'project_app:product_list' %}">войти без авторизаций</a>
+    
 </div>
 
 {% endblock %}
