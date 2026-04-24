@@ -7,14 +7,16 @@
 
 {% block content %}
 <div style="display: flex; justify-content: center;">
-{% if user.is_authenticated and user.is_staff or user.is_superuser %}
-<div class="controls"> 
-    <form method="get" action="">
-        <input type="text" name="search" id="search" placeholder="Поиск" value="{{ request.GET.search }}">
-        <button type="submit">Найти</button>
-    </form>
-</div>
+{% if user.is_authenticated %}
+    {% if user.is_staff or user.is_superuser %}
+        <div class="controls"> 
+            <form method="get">
+                <input type="text" name="search" placeholder="Поиск" value="{{ request.GET.search }}">
+                <button type="submit">Найти</button>
+            </form>
+        </div>
     {% endif %}
+{% endif %}
 </div>
 <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
     {% for product in products %}
