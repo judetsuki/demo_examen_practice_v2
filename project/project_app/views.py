@@ -51,6 +51,16 @@ def product_list(request):
         search_query=request.GET.get('search')
         if search_query:
             products=products.filter(name__icontains=search_query)
+
+        category_filter = request.GET.get('filter')
+        if category_filter:
+            products=products.filter(category=category_filter)
+
+        sort_by = request.GET.get('sort')
+        if sort_by in ['price','-price',]:
+            products = products.order_by(sort_by)
+
+
         orders = Order.objects.all()
 
     return render (request, 'store/product_list.html',{

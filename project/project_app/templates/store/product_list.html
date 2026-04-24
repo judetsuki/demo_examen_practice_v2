@@ -1,56 +1,86 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} {% load static %} {% block title %} страница товаров
+{% endblock %} {% block content %}
+<div style="display: flex; justify-content: center">
+  {% if user.is_authenticated %} {% if user.is_staff or user.is_superuser %}
+<div class="staff-controls" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
+    <form method="get" style="display: flex; gap: 10px; flex-wrap: wrap;">
+        
+        <!-- Поиск -->
+        <input type="text" name="search" placeholder="Поиск..." value="{{ request.GET.search }}">
 
-{% block title %}
-страница товаров
-{% endblock %}
+                <!-- ФИЛЬТРАЦИЯ (по производителю) -->
+        <select name="category">
+            <option value="">Все категории</option>
+            {% for c in categories %}
+                <option value="{{ c }}" {% if request.GET.category == c %}selected{% endif %}>
+                    {{ c }}
+                </option>
+            {% endfor %}
+        </select>
 
-{% block content %}
-<div style="display: flex; justify-content: center;">
-{% if user.is_authenticated %}
-    {% if user.is_staff or user.is_superuser %}
-        <div class="controls"> 
-            <form method="get">
-                <input type="text" name="search" placeholder="Поиск" value="{{ request.GET.search }}">
-                <button type="submit">Найти</button>
-            </form>
-        </div>
-    {% endif %}
-{% endif %}
+        <!-- Сортировка -->
+        <select name="sort">
+            <option value="">Сортировка</option>
+            <option value="price" {% if request.GET.sort == 'price' %}selected{% endif %}>Дешевле</option>
+            <option value="-price" {% if request.GET.sort == '-price' %}selected{% endif %}>Дороже</option>
+        </select>
+
+        <!-- Кнопка применения -->
+        <button type="submit">Применить</button>
+        
+        <!-- Ссылка для сброса -->
+        <a href="{% url 'project_app:product_list' %}">Сбросить</a>
+    </form>
 </div>
-<div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
-    {% for product in products %}
-    <div class="product_card" style="width: 100%; max-width: 1000px; border: 1px solid #000 ;">
-            {% if user.is_superuser %}
-            <a href="{% url 'project_app:edit_product' product.pk %}">Редактировать</a>
-            <a href="{% url 'project_app:delete_product' product.pk %}">Удалить</a>
-        {% endif %}
-        <div style="display: flex;">
-            <div style="flex: 1;">
-                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'picture.png '%}{% endif %}" style="max-width:100%"  alt="картинка обуви" srcset="">
-            </div>
+  {% endif %} {% endif %}
+</div>
+<div
+  style="display: flex; flex-direction: column; gap: 20px; align-items: center"
+>
+  {% for product in products %}
+  <div
+    class="product_card"
+    style="width: 100%; max-width: 1000px; border: 1px solid #000"
+  >
+    {% if user.is_superuser %}
+    <a href="{% url 'project_app:edit_product' product.pk %}">Редактировать</a>
+    <a href="{% url 'project_app:delete_product' product.pk %}">Удалить</a>
+    {% endif %}
+    <div style="display: flex">
+      <div style="flex: 1">
+        <img
+          src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'picture.png '%}{% endif %}"
+          style="max-width: 100%"
+          alt="картинка обуви"
+          srcset=""
+        />
+      </div>
 
-            <div style="flex: 2; ">
-                <p>{{product.get_category_display}}</p>
-                <p>{{product.description|truncatechars:100}}</p>
-                <p>{{product.maunfacturer}}</p>
-                <p>{{product.supplier}}</p>
-                <p>{% if product.discount %}
-                    <span class="price-discount"><s>{{product.price}}</s>
-                        <span class = 'final-price'>{{product.get_final_price|default:product.price}}</span></span>
-                        {% else %}{{product.price}}{% endif %}
-                </p>
-                <p>{{ product.unit }}</p>
-                <p>{{ product.stock }}</p>
-            </div>
+      <div style="flex: 2">
+        <p>{{product.get_category_display}}</p>
+        <p>{{product.description|truncatechars:100}}</p>
+        <p>{{product.maunfacturer}}</p>
+        <p>{{product.supplier}}</p>
+        <p>
+          {% if product.discount %}
+          <span class="price-discount"
+            ><s>{{product.price}}</s>
+            <span class="final-price"
+              >{{product.get_final_price|default:product.price}}</span
+            ></span
+          >
+          {% else %}{{product.price}}{% endif %}
+        </p>
+        <p>{{ product.unit }}</p>
+        <p>{{ product.stock }}</p>
+      </div>
 
-            <div style="flex: 0 0 100px; text-align: center;">
-                <p>Скидка</p>
-                <p>{{product.discount}}</p>
-            </div>
-
-        </div>
+      <div style="flex: 0 0 100px; text-align: center">
+        <p>Скидка</p>
+        <p>{{product.discount}}</p>
+      </div>
     </div>
-    {% endfor %}
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}
