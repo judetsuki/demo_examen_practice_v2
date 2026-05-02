@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from django.db.models import Q
 from .models import *
 from .forms import *
 # Create your views here.
@@ -46,18 +47,24 @@ def product_list(request):
     user = request.user
     products = Product.objects.all()
     orders = []
+    suppliers = Product.objects.values_list('supplier', flat = True).distinct()
 
     if user.is_authenticated and (user.is_staff or user.is_superuser):
         search_query=request.GET.get('search')
         if search_query:
-            products=products.filter(name__icontains=search_query)
+            products=products.filter(
+                Q(name__icontains=search_query) |
+                Q(description__icontains=search_query) |
+                Q(manufacturer__icontains=search_query) |
+                Q(supplier__icontains=search_query)
+                )
 
-        category_filter = request.GET.get('filter')
-        if category_filter:
-            products=products.filter(category=category_filter)
+        supplier_filter = request.GET.get('supplier')
+        if supplier_filter:
+            products=products.filter(supplier=supplier_filter)
 
         sort_by = request.GET.get('sort')
-        if sort_by in ['price','-price',]:
+        if sort_by in ['stock','-stock',]:
             products = products.order_by(sort_by)
 
 
@@ -66,4 +73,5 @@ def product_list(request):
     return render (request, 'store/product_list.html',{
         'products': products,
         'orders': orders,
+        'suppliers': suppliers,
     })

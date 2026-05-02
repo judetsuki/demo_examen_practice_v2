@@ -2,36 +2,49 @@
 {% endblock %} {% block content %}
 <div style="display: flex; justify-content: center">
   {% if user.is_authenticated %} {% if user.is_staff or user.is_superuser %}
-<div class="staff-controls" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
-    <form method="get" style="display: flex; gap: 10px; flex-wrap: wrap;">
-        
-        <!-- Поиск -->
-        <input type="text" name="search" placeholder="Поиск..." value="{{ request.GET.search }}">
+  <div
+    class="staff-controls"
+    style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px"
+  >
+    <form id="filter-form" method="get" style="display: flex; gap: 10px; flex-wrap: wrap">
+      <!-- ПОИСК -->
+      <input
+        type="text"
+        name="search"
+        placeholder="Поиск..."
+        value="{{ request.GET.search }}"
+      />
 
-                <!-- ФИЛЬТРАЦИЯ (по производителю) -->
-        <select name="category">
-            <option value="">Все категории</option>
-            {% for c in categories %}
-                <option value="{{ c }}" {% if request.GET.category == c %}selected{% endif %}>
-                    {{ c }}
-                </option>
-            {% endfor %}
-        </select>
+      <!-- ФИЛЬТРАЦИЯ  -->
+      <select name="supplier">
+        <option value="">Все категории</option>
+        {% for s in suppliers %}<option value="{{ s }}"{% if request.GET.supplier == s %}selected{%endif%}>{{ s }}</option>
+        {% endfor %}
+      </select>
 
-        <!-- Сортировка -->
-        <select name="sort">
-            <option value="">Сортировка</option>
-            <option value="price" {% if request.GET.sort == 'price' %}selected{% endif %}>Дешевле</option>
-            <option value="-price" {% if request.GET.sort == '-price' %}selected{% endif %}>Дороже</option>
-        </select>
-
-        <!-- Кнопка применения -->
-        <button type="submit">Применить</button>
-        
-        <!-- Ссылка для сброса -->
-        <a href="{% url 'project_app:product_list' %}">Сбросить</a>
+      <!-- СОРТИРОВКА -->
+      <select name="sort" id="sort">
+        <option value="" {% if not request.GET.sort %}selected{% endif %}>без сортировки</option>
+        <option value="stock"{% if request.GET.sort == 'stock' %}selected{%endif%}> Остаток (возр)</option>
+        <option value="-stock"{% if request.GET.sort == '-stock' %}selected{%endif%}> Остаток (убыв) </option>
+      </select>
     </form>
-</div>
+  </div>
+  <script>
+  const form = document.getElementById('filter-form');
+  const inputs = form.querySelectorAll('input, select');
+
+  inputs.forEach(input => {
+    input.addEventListener('change', () => form.submit());
+    if (input.type === 'text'){
+      let timeout = null;
+      input.addEventListener('keyup',() => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => form.submit(), 500)
+      })
+    }
+  });
+  </script>
   {% endif %} {% endif %}
 </div>
 <div
