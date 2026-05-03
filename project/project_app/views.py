@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.db.models import Q
+from django.contrib import messages
 from .models import *
 from .forms import *
 # Create your views here.
@@ -11,7 +12,14 @@ def delete_order(request,pk):
 
 def delete_product(request,pk):
     if request.user.is_superuser:
-        get_object_or_404(Product,pk=pk).delete()
+        product = get_object_or_404(Product,pk=pk)
+        if OrderDetail.objects.filter(product=product).exists():
+            messages.error(request, 'товар присутвтвует в заказе, нельзя удалить')
+            return redirect('project_app:product_list')
+        else:
+            product.delete()
+            messages.success(request,'товар удален')
+
     return redirect('project_app:product_list')
 
 def create_product(request):

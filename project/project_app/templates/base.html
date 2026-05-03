@@ -23,7 +23,14 @@
 <body>
     {% include "includes/header.html" %}
     <main>
-        {% block content %}{% endblock %}
+        {% if messages %}
+        <script>
+        {% for message in messages %}
+        alert("{{ message|escapejs }}")
+        {% endfor %}
+        </script>
+        {% endif %}
+                {% block content %}{% endblock %}
     </main>
     {% include "includes/footer.html" %}
 </body>
