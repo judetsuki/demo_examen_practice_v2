@@ -6,6 +6,15 @@
     <title>Document</title>
   </head>
   <body>
+  <script> if (window.name !== 'product_editor_window'){
+    if (window.name == ''){
+      window.name = 'product_editor_window';
+      else {
+        alert('закрой окно ');
+        window.close()
+      }
+    }
+  } </script>
     {% block content %}
     <div class="form-container">
       <h2>{{title|default:"Заполнение формы"}}</h2>

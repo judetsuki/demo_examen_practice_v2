@@ -57,7 +57,7 @@
     style="width: 100%; max-width: 1000px; border: 1px solid #000"
   >
     {% if user.is_superuser %}
-    <a href="{% url 'project_app:edit_product' product.pk %}">Редактировать</a>
+    <a href="{% url 'project_app:edit_product' product.pk %}" onclick = "window.open(this.href, 'product_editor_window'); return false; " >Редактировать</a>
     <a href="{% url 'project_app:delete_product' product.pk %}">Удалить</a>
     {% endif %}
     <div style="display: flex">
