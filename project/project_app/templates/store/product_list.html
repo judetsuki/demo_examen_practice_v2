@@ -50,6 +50,7 @@
 <div
   style="display: flex; flex-direction: column; gap: 20px; align-items: center"
 >
+    <a href="{% url 'project_app:create_product'  %}">Создать продукт</a>
   {% for product in products %}
   <div
     class="product_card"

@@ -14,6 +14,17 @@ def delete_product(request,pk):
         get_object_or_404(Product,pk=pk).delete()
     return redirect('project_app:product_list')
 
+def create_product(request):
+    if not request.user.is_superuser:
+        return redirect('project_app:product_list')
+    form = ProductForm(request.POST, request.FILES)
+    if form.is_valid():
+        form.save()
+        return redirect('project_app:product_list')
+    else:
+        form = ProductForm()
+    return render (request,'store/form_generic.html', {'form':form, 'title':'создание продукта'})
+
 def edit_product(request,pk):
     if not request.user.is_superuser:
         return redirect('project_app:product_list')
